@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title></title>
+    <style type="text/css">
+        /*
+rotate(<angle>);<angle>为一个角度值，单位deg，可以为正数或者负数，正数是顺时针旋转，负数是逆时针旋转。
+rotateX(angele),相当于rotate3d(1,0,0,angle)指定在3维空间内的X轴旋转
+rotateY(angele),相当于rotate3d(0,1,0,angle)指定在3维空间内的Y轴旋转
+rotateZ(angele),相当于rotate3d(0,0,1,angle)指定在3维空间内的Z轴旋转
+*/
+
+        /*这里perspective一定是在父容器上面设置， perspective-origin是在子容器上面设置。*/
+        #div1 {
+            position: relative;
+            height: 150px;
+            width: 150px;
+            margin: 150px 0px 0px 400px;
+            padding: 10px;
+            border: 1px solid black;
+            perspective: 100;
+            -webkit-perspective: 100;
+        }
+
+        #div2 {
+            padding: 50px;
+            position: absolute;
+            border: 1px solid black;
+            background-color: yellow;
+
+            transform: rotateY(45deg);
+            -webkit-transform: rotateY(45deg);
+            perspective-origin: left top;
+            -webkit-perspective-origin: left top;
+            -webkit-backface-visibility: visible;
+            -moz-backface-visibility: visible;
+            -ms-backface-visibility: visible;
+            transform-style: preserve-3d;
+            -webkit-transform-style: preserve-3d;
+            /*transform: rotate3d(0, 1, 0, -30deg);
+		    -webkit-transform: rotate3d(0, 1, 0, -30deg);*/
+        }
+
+        .animated_divbox {
+            position: relative;
+            height: 150px;
+            width: 150px;
+            margin: 150px 0px 0px 400px;
+            padding: 10px;
+            border: 1px solid black;
+        }
+
+        .animated_div {
+            background-color: #efefef;
+            position: relative;
+            height: 300px;
+            width: 300px;
+            margin: 0px;
+            padding: 0px;
+            border: 1px solid black;
+            perspective: 100;
+            -webkit-perspective: 100;
+            /* Safari and Chrome */
+        }
+
+        .a {
+            background-color: #e99b21;
+            position: absolute;
+            top: 100px;
+            left: 0px;
+            height: 100px;
+            width: 100px;
+            transform-origin: right center;
+            -webkit-transform-origin: right center;
+            transform: rotateY(-30deg);
+            -webkit-transform: rotateY(-30deg);
+        }
+
+        .b {
+            background-color: #3f3f3f;
+            position: absolute;
+            top: 0px;
+            left: 100px;
+            height: 100px;
+            width: 100px;
+            transform-origin: center bottom;
+            -webkit-transform-origin: center bottom;
+            transform: rotateX(30deg);
+            -webkit-transform: rotateX(30deg);
+        }
+
+        .c {
+            background-color: #339fce;
+            position: absolute;
+            top: 100px;
+            left: 200px;
+            height: 100px;
+            width: 100px;
+            transform-origin: left center;
+            -webkit-transform-origin: left center;
+            transform: rotateY(30deg);
+            -webkit-transform: rotateY(30deg);
+        }
+
+        .d {
+            background-color: #33ce7c;
+            position: absolute;
+            top: 200px;
+            left: 100px;
+            height: 100px;
+            width: 100px;
+            transform-origin: center top;
+            -webkit-transform-origin: center top;
+            transform: rotateX(30deg);
+            -webkit-transform: rotateX(-30deg);
+        }
+
+        .center {
+            background-color: #ff0000;
+            position: absolute;
+            top: 100px;
+            left: 100px;
+            height: 100px;
+            width: 100px;
+        }
+    </style>
+    <script>
+        var x;
+        var y;
+        var n = 0;
+        var ny = 0;
+        var rotINT;
+        var rotYINT;
+
+        // function rotateDIV(){
+        // 	x=document.getElementById("rotate1")
+        // 	clearInterval(rotINT)
+        // 	rotINT=setInterval("startRotate()",10)
+        // }
+        function rotateYDIV() {
+            y = document.getElementById("rotatey1")
+            clearInterval(rotYINT)
+            rotYINT = setInterval("startYRotate()", 10)
+        }
+        // function startRotate(){
+        // 	n=n+1
+        // 	x.style.transform="rotate(" + n + "deg)"
+        // 	x.style.webkitTransform="rotate(" + n + "deg)"
+        // 	x.style.OTransform="rotate(" + n + "deg)"
+        // 	x.style.MozTransform="rotate(" + n + "deg)"
+        // 	if (n==360){
+        // 		clearInterval(rotINT)
+        // 		if (n==360){
+        // 			n=0
+        // 		}
+        // 	}
+        // }
+        function startYRotate() {
+            ny = ny + 1
+            y.style.transform = "rotateY(" + ny + "deg)"
+            y.style.webkitTransform = "rotateY(" + ny + "deg)"
+            y.style.OTransform = "rotateY(" + ny + "deg)"
+            y.style.MozTransform = "rotateY(" + ny + "deg)"
+            if (ny >= 360) {
+                clearInterval(rotYINT)
+                if (ny >= 360) {
+                    ny = 0
+                }
+            }
+        }
+    </script>
+
+
+</head>
+
+<body>
+    <!-- <div id="div1"> -->
+    <!-- <div id="div2">HELLO</div> -->
+    <!-- </div> -->
+    <!-- <p onclick="rotateDIV()" id="rotate1" class="animated_div" style="transform: rotate(360deg); -webkit-transform: rotate(360deg);">2D 旋转</p> -->
+    <div class="animated_divbox">
+        <div onclick="rotateYDIV()" id="rotatey1" class="animated_div" style="transform: rotateY(360deg); -webkit-transform: rotateY(360deg);">
+            <div class="a"></div>
+            <div class="b"></div>
+            <div class="c"></div>
+            <div class="d"></div>
+            <div class="center"></div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
